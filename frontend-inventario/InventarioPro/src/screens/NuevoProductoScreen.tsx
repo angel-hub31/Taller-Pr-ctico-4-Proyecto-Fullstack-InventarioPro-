@@ -24,6 +24,8 @@ export default function NuevoProductoScreen({ navigation }: any) {
         const result = await ImagePicker.launchCameraAsync({ base64: true, quality: 0.5 });
         if (!result.canceled && result.assets[0].base64) {
             setFoto(`data:image/jpeg;base64,${result.assets[0].base64}`);
+            Alert.alert("Exito", "foto capturada")
+
         }
     };
 

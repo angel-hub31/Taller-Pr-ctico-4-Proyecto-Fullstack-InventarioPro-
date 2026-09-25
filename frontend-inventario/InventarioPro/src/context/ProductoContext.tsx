@@ -17,6 +17,8 @@ export type Producto = {
 
 type ProductoContextType = {
     productos: Producto[]
+    
+    totalProducto:number;
     fetchProductos: () => void
     addProducto: (producto: Omit<Producto, 'id' | 'createdAt'>) => Promise<boolean>
     updateProducto: (id: number, producto: Omit<Producto, 'id' | 'createdAt'>) => Promise<boolean>
@@ -29,7 +31,9 @@ const ProductoContext = createContext<ProductoContextType | undefined>(undefined
 export function ProductoProvider({ children }: { children: ReactNode }) {
     const [productos, setProductos] = useState<Producto[]>([])
 
+    const totalProducto=productos.length;
     const fetchProductos = async () => {
+
         try {
             const response = await api.get('/productos')
             setProductos(response.data)
@@ -82,8 +86,9 @@ export function ProductoProvider({ children }: { children: ReactNode }) {
 
         }
     };
+    
     return (
-        <ProductoContext.Provider value={{ productos, fetchProductos, addProducto, updateProducto, deleteProducto }}>
+        <ProductoContext.Provider value={{ productos,totalProducto, fetchProductos, addProducto, updateProducto, deleteProducto }}>
             {children}
         </ProductoContext.Provider>
     )
